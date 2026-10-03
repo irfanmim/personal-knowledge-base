@@ -28,6 +28,8 @@ export default defineConfig({
   lang: 'en',
   // Built from the staging folder produced by scripts/build-content.mjs, never from vault/ directly.
   srcDir: '.content',
+  // Dark by default; visitors can still switch, and their choice is remembered.
+  appearance: 'dark',
   cleanUrls: true,
   lastUpdated: false,
   sitemap: {
