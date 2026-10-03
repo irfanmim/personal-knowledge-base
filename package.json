@@ -1,0 +1,25 @@
+{
+  "name": "personal-website-knowledge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "content": "node scripts/build-content.mjs",
+    "slugs": "node scripts/build-content.mjs --write-manifest",
+    "build": "node scripts/build-content.mjs && vitepress build .",
+    "preview": "vitepress preview .",
+    "og": "node scripts/make-og.mjs"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "github-slugger": "^2.0.0",
+    "gray-matter": "^4.0.3",
+    "sharp": "^0.34.0",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.13"
+  }
+}

@@ -1,0 +1,8 @@
+[
+  { "key": "system-design", "label": "System Design", "description": "Building blocks and trade-offs for scalable systems." },
+  { "key": "coding-patterns", "label": "Coding Patterns", "description": "Reusable patterns and idioms for writing clearer code." },
+  { "key": "ai-engineering", "label": "AI Engineering", "description": "Building products and tooling on top of language models." },
+  { "key": "laravel", "label": "Laravel", "description": "Notes on the Laravel framework and its ecosystem." },
+  { "key": "vue", "label": "Vue", "description": "Notes on Vue 3, its tooling and patterns." },
+  { "key": "projects", "label": "Projects", "description": "Write-ups from things I have built." }
+]

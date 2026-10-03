@@ -1,0 +1,64 @@
+name: Deploy Knowledge Base
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'vault/.obsidian/**'
+      - 'vault/_templates/**'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run: show what rsync would change without deploying'
+        type: boolean
+        default: false
+
+# Rapid consecutive pushes: only the latest build deploys.
+concurrency:
+  group: deploy-knowledge
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # entry dates fall back to git history
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Guard deploy path
+        env:
+          SSH_PATH: ${{ secrets.SSH_PATH }}
+        run: |
+          # Must be an absolute path at least 3 levels deep, so a bad secret can't target / or /home.
+          if ! printf '%s' "$SSH_PATH" | grep -Eq '^/[^/]+/[^/]+/[^/]+'; then
+            echo "SSH_PATH is empty or too shallow; refusing to deploy." >&2
+            exit 1
+          fi
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      - name: Deploy with rsync
+        run: |
+          DRY=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then DRY="--dry-run --itemize-changes"; fi
+          rsync -az --delete $DRY \
+            --chmod=D755,F644 \
+            --exclude '.well-known/' \
+            --exclude 'cgi-bin/' \
+            -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts" \
+            .vitepress/dist/ \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.SSH_PATH }}/"

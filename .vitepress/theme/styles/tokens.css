@@ -1,0 +1,126 @@
+/* Tokens from personal-website-fe/src/App.vue, mapped onto VitePress variables. */
+:root {
+  --vp-font-family-base: 'Inter', system-ui, sans-serif;
+  --vp-font-family-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --kb-display: 'Space Grotesk', 'Inter', sans-serif;
+
+  --vp-c-bg: #f6f8fb;
+  --vp-c-bg-alt: #eef2f7;
+  --vp-c-bg-elv: #ffffff;
+  --vp-c-bg-soft: #eef2f7;
+  --vp-c-text-1: #0f172a;
+  --vp-c-text-2: #475569;
+  --vp-c-text-3: #64748b;
+  --vp-c-divider: rgba(15, 23, 42, 0.09);
+  --vp-c-gutter: rgba(15, 23, 42, 0.09);
+  --vp-c-border: rgba(15, 23, 42, 0.16);
+  --vp-c-brand-1: #0e7490;
+  --vp-c-brand-2: #0891b2;
+  --vp-c-brand-3: #0891b2;
+  --vp-c-brand-soft: rgba(8, 145, 178, 0.12);
+  --vp-code-block-bg: #eef2f7;
+
+  --kb-panel: #ffffff;
+  --kb-st-draft: #b45309;
+  --kb-st-evolving: #0e7490;
+  --kb-st-complete: #047857;
+}
+
+.dark {
+  --vp-c-bg: #0a0e17;
+  --vp-c-bg-alt: #0f1420;
+  --vp-c-bg-elv: #141b29;
+  --vp-c-bg-soft: #141b29;
+  --vp-c-text-1: #e6ebf4;
+  --vp-c-text-2: #aab6cc;
+  --vp-c-text-3: #7c8aa5;
+  --vp-c-divider: rgba(148, 163, 184, 0.1);
+  --vp-c-gutter: rgba(148, 163, 184, 0.1);
+  --vp-c-border: rgba(148, 163, 184, 0.18);
+  --vp-c-brand-1: #67e8f9;
+  --vp-c-brand-2: #22d3ee;
+  --vp-c-brand-3: #22d3ee;
+  --vp-c-brand-soft: rgba(34, 211, 238, 0.14);
+  --vp-code-block-bg: #0b111c;
+
+  --kb-panel: #0f1420;
+  --kb-st-draft: #fbbf24;
+  --kb-st-evolving: #22d3ee;
+  --kb-st-complete: #34d399;
+}
+
+h1,
+h2,
+h3,
+.VPDoc h1,
+.VPDoc h2,
+.VPHero .name,
+.VPHero .text {
+  font-family: var(--kb-display);
+  letter-spacing: -0.01em;
+}
+
+.VPDoc h1 {
+  font-size: 38px;
+  line-height: 1.15;
+}
+
+/* Obsidian callouts (see .vitepress/plugins/callouts.js) */
+.vp-doc .callout {
+  --c: var(--vp-c-brand-2);
+  margin: 18px 0;
+  padding: 12px 16px;
+  border: 1px solid color-mix(in srgb, var(--c) 35%, transparent);
+  background: color-mix(in srgb, var(--c) 8%, transparent);
+  border-radius: 12px;
+}
+.vp-doc .callout-tip {
+  --c: var(--kb-st-complete);
+}
+.vp-doc .callout-warning {
+  --c: var(--kb-st-draft);
+}
+.vp-doc .callout-danger {
+  --c: #ef4444;
+}
+.vp-doc .callout-title {
+  margin: 0 0 4px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c);
+  line-height: 1.6;
+}
+.vp-doc details.callout > summary {
+  cursor: pointer;
+  margin-bottom: 4px;
+}
+.vp-doc .callout > :last-child {
+  margin-bottom: 0;
+}
+.vp-doc .callout p {
+  margin: 4px 0 0;
+}
+
+/* Home hero: calmer than the default gradient headline */
+:root {
+  --vp-home-hero-name-color: var(--vp-c-brand-2);
+}
+
+.VPHero .name {
+  font-size: 14px !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.4 !important;
+}
+
+.VPHero .text {
+  font-size: clamp(36px, 6vw, 56px) !important;
+  line-height: 1.1 !important;
+  max-width: 720px;
+}
+
+.VPHero .tagline {
+  max-width: 620px;
+}

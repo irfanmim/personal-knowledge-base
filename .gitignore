@@ -1,0 +1,16 @@
+node_modules/
+.vitepress/dist/
+.vitepress/cache/
+.content/
+*.log
+.DS_Store
+
+# Unpublished notes never reach this public repo
+vault/_drafts/
+
+# Obsidian volatile files
+vault/.obsidian/workspace*.json
+vault/.obsidian/cache
+vault/.obsidian/plugins/*/main.js
+vault/.obsidian/plugins/*/styles.css
+vault/.trash/
