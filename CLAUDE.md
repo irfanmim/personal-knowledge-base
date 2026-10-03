@@ -55,5 +55,5 @@ sibling repos `personal-website-fe` / `personal-website-be` (never edit those fr
 - The repo is PUBLIC. Unpublished notes go in `vault/_drafts/` (gitignored) and must never be committed.
 - Folders `.x`, `_x` and `attachments` inside `vault/` are skipped by the pipeline.
 - Deploy: push to `main` runs `.github/workflows/deploy.yml` (rsync over SSH, `--delete`).
-  Secrets: `SSH_PRIVATE_KEY`, `SSH_HOST`, `SSH_PORT`, `SSH_USER`, `SSH_PATH`, `SSH_KNOWN_HOSTS`.
+  Secrets: `SSH_PRIVATE_KEY`, `SSH_HOST`, `SSH_PORT`, `SSH_USER`, `SSH_PATH`.
 - Content commits use the `content:` prefix; code commits do not.

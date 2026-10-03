@@ -61,9 +61,7 @@ Deploys run from `.github/workflows/deploy.yml` on every push to `main` (and man
    document root of the `knowledge` subdomain (e.g. `/home/<user>/domains/irfanmim.com/public_html/knowledge`).
 4. **Check rsync exists**: `ssh -p <port> -i knowledge_deploy <user>@<host> 'which rsync'`.
    If it prints nothing, the workflow needs the scp fallback; ask for it to be added.
-5. **Get the host key**: `ssh-keyscan -p <port> <host>`. Compare its fingerprint with the one in the panel
-   (`ssh-keygen -lf <(ssh-keyscan -p <port> <host>)`), then use the output as `SSH_KNOWN_HOSTS`.
-6. **Add GitHub secrets** (repo → Settings → Secrets and variables → Actions):
+5. **Add GitHub secrets** (repo → Settings → Secrets and variables → Actions):
 
    | Secret | Value |
    |---|---|
@@ -72,14 +70,16 @@ Deploys run from `.github/workflows/deploy.yml` on every push to `main` (and man
    | `SSH_PORT` | SSH port |
    | `SSH_USER` | SSH username |
    | `SSH_PATH` | absolute document root of the subdomain, no trailing slash |
-   | `SSH_KNOWN_HOSTS` | output from step 5 |
 
-7. **First run**: Actions → "Deploy Knowledge Base" → Run workflow with **dry run** ticked and read the
+6. **First run**: Actions → "Deploy Knowledge Base" → Run workflow with **dry run** ticked and read the
    rsync output (it lists what would change/delete). Then run again without dry run.
 
-Safety: the workflow refuses to run if `SSH_PATH` is empty or shallower than 3 folders, verifies the host key
-(no `StrictHostKeyChecking=no`), and never touches `.well-known/` or `cgi-bin/` on the server. `.htaccess` ships
-from `public/` so it is part of every deploy. Commit `package-lock.json` (the workflow uses `npm ci`).
+Safety: the workflow refuses to run if `SSH_PATH` is empty or shallower than 3 folders, never touches
+`.well-known/` or `cgi-bin/` on the server, and keeps strict host key checking on (no `StrictHostKeyChecking=no`).
+The server's host key is scanned with `ssh-keyscan` at deploy time, like the backend deploy, so it is not pinned
+to a value you verified. To pin it later, store `ssh-keyscan -p <port> <host>` output in a secret and write that
+to `known_hosts` in the workflow. `.htaccess` ships from `public/` so it is part of every deploy.
+Commit `package-lock.json` (the workflow uses `npm ci`).
 
 ## Obsidian Git plugin
 

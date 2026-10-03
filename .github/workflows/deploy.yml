@@ -49,7 +49,13 @@ jobs:
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          printf '%s\n' "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          # Host key is scanned at deploy time (same as the backend deploy). To pin it instead,
+          # store the output of `ssh-keyscan` in a secret and write that to known_hosts here.
+          ssh-keyscan -p "${{ secrets.SSH_PORT }}" -H "${{ secrets.SSH_HOST }}" > ~/.ssh/known_hosts
+          if [ ! -s ~/.ssh/known_hosts ]; then
+            echo "ssh-keyscan returned no host key; check SSH_HOST and SSH_PORT." >&2
+            exit 1
+          fi
 
       - name: Deploy with rsync
         run: |
